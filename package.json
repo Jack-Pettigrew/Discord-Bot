@@ -19,6 +19,6 @@
   "homepage": "https://github.com/Jack-Pettigrew/Discord-Bot#readme",
   "dependencies": {
     "@discordjs/rest": "^1.0.0",
-    "discord.js": "^14.0.2"
+    "discord.js": "^13.9.1"
   }
 }
