@@ -1,6 +1,8 @@
 // Require the necessary discord.js classes
 const Discord = require("discord.js");
 const { token } = require("./config.json");
+const { search } = require("./youtube-test.js");
+const { youtube } = require("googleapis/build/src/apis/youtube");
 
 // Create a new client instance
 const client = new Discord.Client({
@@ -14,6 +16,11 @@ client.once("ready", () => {
 	client.application?.commands.create({
 		name: "help",
 		description: "Replies with some help!",	  
+	})
+
+	client.application?.commands.create({
+		name: "darkdax",
+		description: "Replies with some DarkDax links!",	  
 	})
 });
 
@@ -30,6 +37,19 @@ client.on('interactionCreate', async (interaction) => {
 				content: "This is some extremely unhelpful text!",
 				ephemeral: true,
 			})
+			break;
+		case 'darkdax':
+			let links = await search();
+			let reply = "";
+
+			links.forEach(element => {
+				reply = reply + element.link + "\n";
+			});
+
+			interaction.reply({
+				content: reply,
+				ephemeral: true
+			});
 			break;
 	}
 });
