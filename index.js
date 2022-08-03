@@ -2,6 +2,7 @@
 const Discord = require("discord.js");
 const { token } = require("./config.json");
 const { search } = require("./youtube-test.js");
+const { setupCommands } = require("./commands.js");
 const { youtube } = require("googleapis/build/src/apis/youtube");
 
 // Create a new client instance
@@ -11,17 +12,9 @@ const client = new Discord.Client({
 
 // When the client is ready, run this code (only once)
 client.once("ready", () => {
-	console.log("Bot Ready!!");
-	
-	client.application?.commands.create({
-		name: "help",
-		description: "Replies with some help!",	  
-	})
+	setupCommands(client);
 
-	client.application?.commands.create({
-		name: "darkdax",
-		description: "Replies with some DarkDax links!",	  
-	})
+	console.log("Bot Ready!!");
 });
 
 client.on('interactionCreate', async (interaction) => {
