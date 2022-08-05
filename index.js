@@ -5,6 +5,8 @@ const { search } = require("./youtube-test.js");
 const { setupCommands } = require("./commands/commands.js");
 const { youtube } = require("googleapis/build/src/apis/youtube");
 
+var annoyees = [];
+
 // Create a new client instance
 const client = new Discord.Client({
   intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES],
@@ -18,7 +20,7 @@ client.once("ready", () => {
 });
 
 client.on("messageCreate", async (message) => {
-	if (message.author.bot) return;
+	if (message.author.bot || !annoyees.includes(message.author.id)) return;
 
 	var text = message.content;
 	var modifiedText = '';
@@ -59,6 +61,14 @@ client.on('interactionCreate', async (interaction) => {
 				content: reply,
 				ephemeral: true
 			});
+			break;
+		
+		case 'annoy':
+			annoyees.push(interaction.options.data[0].user.id);
+			interaction.reply({
+				content: "Annoying " + interaction.options.data[0].user.username + "...",
+				ephemeral: true
+			})
 			break;
 	}
 });
