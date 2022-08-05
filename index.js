@@ -17,6 +17,22 @@ client.once("ready", () => {
 	console.log("Bot Ready!!");
 });
 
+client.on("messageCreate", async (message) => {
+	if (message.author.bot) return;
+
+	var text = message.content;
+	var modifiedText = '';
+
+	var modUpperCaseStart = Math.floor(Math.random() * 2);
+
+	for (let index = 0; index < text.length; index++) {
+		let letter = index % 2 == modUpperCaseStart ? text.charAt(index).toUpperCase() : text.charAt(index).toLowerCase();
+		modifiedText += letter;
+	}
+	
+	message.channel.send(modifiedText);
+});
+
 client.on('interactionCreate', async (interaction) => {
 	if (!interaction.isCommand()) {
 		return;
