@@ -2,7 +2,7 @@
 const Discord = require("discord.js");
 const { token } = require("./config.json");
 const { search } = require("./youtube-test.js");
-const { setupCommands } = require("./commands.js");
+const { setupCommands } = require("./commands/commands.js");
 const { youtube } = require("googleapis/build/src/apis/youtube");
 
 // Create a new client instance
