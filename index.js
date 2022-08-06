@@ -4,6 +4,7 @@ const { token } = require("./config.json");
 const { search } = require("./youtube-test.js");
 const { setupCommands } = require("./commands/commands.js");
 const { youtube } = require("googleapis/build/src/apis/youtube");
+const { baremetalsolution } = require("googleapis/build/src/apis/baremetalsolution");
 
 var annoyees = [];
 
@@ -70,6 +71,15 @@ client.on('interactionCreate', async (interaction) => {
 				ephemeral: true
 			})
 			break;
+		
+		case 'stopannoy':
+			annoyees.pop(interaction.options.data[0].user.id);
+			interaction.reply({
+				content: "Stopping annoying " + interaction.options.data[0].user.username + "...",
+				ephemeral: true
+			})
+			break;
+
 	}
 });
 

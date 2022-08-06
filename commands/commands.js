@@ -28,6 +28,20 @@ const setupCommands = (client) => {
 		],
 	})
 
+	// stop annoy
+	client.application?.commands.create({
+		name: "stopannoy",
+		description: "Stop annoying a server member!",
+		options: [
+			{
+				name: "userid",
+				description: "The ID of the user to stop annoying",
+				type: "USER",
+				required: true,
+			}
+		],
+	})	
+
 };
 
 module.exports.setupCommands = setupCommands;
