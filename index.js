@@ -1,28 +1,28 @@
 // Require the necessary discord.js classes
-const Discord = require("discord.js");
+const { Client, GatewayIntentBits, Partials, InteractionType } = require("discord.js");
 const { token } = require("./config.json");
 const { search } = require("./youtube-test.js");
 const { setupCommands } = require("./commands/commands.js");
 const { youtube } = require("googleapis/build/src/apis/youtube");
-const { baremetalsolution } = require("googleapis/build/src/apis/baremetalsolution");
 
 var annoyees = [];
 
 // Create a new client instance
-const client = new Discord.Client({
-  intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES],
+const client = new Client({
+	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent ],
+	partials: [Partials.Channel]
 });
 
 // When the client is ready, run this code (only once)
-client.once("ready", () => {
-	setupCommands(client);
-
+client.once("ready", async () => {
+	await setupCommands(client);
+	
 	console.log("Bot Ready!!");
 });
 
 client.on("messageCreate", async (message) => {
-	if (message.author.bot || !annoyees.includes(message.author.id)) return;
-
+	if (message.author.bot || annoyees.length < 1 || !annoyees.includes(message.author.id)) return;
+	
 	var text = message.content;
 	var modifiedText = '';
 
@@ -37,7 +37,7 @@ client.on("messageCreate", async (message) => {
 });
 
 client.on('interactionCreate', async (interaction) => {
-	if (!interaction.isCommand()) {
+	if (!interaction == InteractionType.ApplicationCommand) {
 		return;
 	}
 
@@ -50,6 +50,8 @@ client.on('interactionCreate', async (interaction) => {
 				ephemeral: true,
 			})
 			break;
+
+		// TODO: Use embed builder for this
 		case 'darkdax':
 			let links = await search();
 			let reply = "";
