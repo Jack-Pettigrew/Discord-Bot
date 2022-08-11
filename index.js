@@ -63,7 +63,18 @@ client.on('interactionCreate', async (interaction) => {
 			break;
 		
 		case 'stopannoy':
-			annoyees.pop(interaction.options.data[0].user.id);
+			const index = annoyees.indexOf(interaction.options.data[0].user.id);
+			if (index > -1) {
+				annoyees.splice(index, 1);
+			}
+			else {
+				interaction.reply({
+					content: "This user is not being annoyed!",
+					ephemeral: true
+				})
+				return;
+			}
+						
 			interaction.reply({
 				content: "Stopping annoying " + interaction.options.data[0].user.username + "...",
 				ephemeral: true

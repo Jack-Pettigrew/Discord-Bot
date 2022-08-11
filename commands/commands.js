@@ -1,4 +1,4 @@
-const { Client, REST, Routes, ApplicationCommandType, SlashCommandBuilder, MessageMentions, Message } = require("discord.js");
+const { REST, Routes, SlashCommandBuilder, Message } = require("discord.js");
 const { token, applicationID, guildID } = require("../config.json");
 
 const commands = [
