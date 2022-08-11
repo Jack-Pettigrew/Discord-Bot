@@ -2,7 +2,7 @@
 const { Client, GatewayIntentBits, Partials, InteractionType } = require("discord.js");
 const { token } = require("./config.json");
 const { search } = require("./youtube-test.js");
-const { setupCommands } = require("./commands/commands.js");
+const { setupCommands, handleAnnoy } = require("./commands/commands.js");
 const { youtube } = require("googleapis/build/src/apis/youtube");
 
 var annoyees = [];
@@ -21,19 +21,7 @@ client.once("ready", async () => {
 });
 
 client.on("messageCreate", async (message) => {
-	if (message.author.bot || annoyees.length < 1 || !annoyees.includes(message.author.id)) return;
-	
-	var text = message.content;
-	var modifiedText = '';
-
-	var modUpperCaseStart = Math.floor(Math.random() * 2);
-
-	for (let index = 0; index < text.length; index++) {
-		let letter = index % 2 == modUpperCaseStart ? text.charAt(index).toUpperCase() : text.charAt(index).toLowerCase();
-		modifiedText += letter;
-	}
-	
-	message.channel.send(modifiedText);
+	handleAnnoy(message);
 });
 
 client.on('interactionCreate', async (interaction) => {

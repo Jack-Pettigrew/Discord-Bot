@@ -1,4 +1,4 @@
-const { Client, REST, Routes, ApplicationCommandType, SlashCommandBuilder, MessageMentions } = require("discord.js");
+const { Client, REST, Routes, ApplicationCommandType, SlashCommandBuilder, MessageMentions, Message } = require("discord.js");
 const { token, applicationID, guildID } = require("../config.json");
 
 const commands = [
@@ -33,3 +33,24 @@ const setupCommands = async () => {
 };
 
 module.exports.setupCommands = setupCommands;
+
+/**
+ * @param {Message} message 
+ */
+ const handleAnnoy = async (message) => {
+    if (message.author.bot || annoyees.length < 1 || !annoyees.includes(message.author.id)) return;
+	
+	var text = message.content;
+	var modifiedText = '';
+
+	var modUpperCaseStart = Math.floor(Math.random() * 2);
+
+	for (let index = 0; index < text.length; index++) {
+		let letter = index % 2 == modUpperCaseStart ? text.charAt(index).toUpperCase() : text.charAt(index).toLowerCase();
+		modifiedText += letter;
+	}
+	
+	message.channel.send(modifiedText);
+ };
+
+module.exports.handleAnnoy = handleAnnoy;
