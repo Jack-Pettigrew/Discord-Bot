@@ -2,10 +2,8 @@
 const { Client, GatewayIntentBits, Partials, InteractionType } = require("discord.js");
 const { token } = require("./config.json");
 const { search } = require("./youtube-test.js");
-const { setupCommands, handleAnnoy } = require("./commands/commands.js");
+const { setupCommands, handleAnnoy, annoyees } = require("./commands/commands.js");
 const { youtube } = require("googleapis/build/src/apis/youtube");
-
-var annoyees = [];
 
 // Create a new client instance
 const client = new Client({

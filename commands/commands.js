@@ -34,6 +34,8 @@ const setupCommands = async () => {
 
 module.exports.setupCommands = setupCommands;
 
+var annoyees = [];
+
 /**
  * @param {Message} message 
  */
@@ -53,4 +55,5 @@ module.exports.setupCommands = setupCommands;
 	message.channel.send(modifiedText);
  };
 
+module.exports.annoyees = annoyees;
 module.exports.handleAnnoy = handleAnnoy;
