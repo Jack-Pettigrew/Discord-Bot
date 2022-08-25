@@ -1,6 +1,9 @@
-const { REST, Routes, SlashCommandBuilder, Message } = require("discord.js");
+const { REST, Routes, SlashCommandBuilder } = require("discord.js");
 const { token, applicationID, guildID } = require("../config.json");
 
+/**
+ * Array of all possible commands
+ */
 const commands = [
 	new SlashCommandBuilder().setName('help').setDescription('Replies with some help!'),
 	new SlashCommandBuilder().setName('darkdax').setDescription('Replies with some DarkDax links!'),
@@ -20,12 +23,15 @@ const commands = [
 
 const rest = new REST({ version: 10 }).setToken(token);
 
+/**
+ * Sets the bot's slash (/) commands
+ */
 const setupCommands = async () => {
 	try {
-		console.log('Started refreshing application (/) commands.');
+		console.log('Started setting application (/) commands.');
 
 		await rest.put(Routes.applicationCommands(applicationID, guildID), { body: commands })
-			.then(() => console.log('Successfully refreshed application (/) commands.'))
+			.then(() => console.log('Successfully set application (/) commands.'))
 			.catch(console.error);
 	} catch (error) {
 		console.error(error);
@@ -33,27 +39,3 @@ const setupCommands = async () => {
 };
 
 module.exports.setupCommands = setupCommands;
-
-var annoyees = [];
-
-/**
- * @param {Message} message 
- */
- const handleAnnoy = async (message) => {
-    if (message.author.bot || annoyees.length < 1 || !annoyees.includes(message.author.id)) return;
-	
-	var text = message.content;
-	var modifiedText = '';
-
-	var modUpperCaseStart = Math.floor(Math.random() * 2);
-
-	for (let index = 0; index < text.length; index++) {
-		let letter = index % 2 == modUpperCaseStart ? text.charAt(index).toUpperCase() : text.charAt(index).toLowerCase();
-		modifiedText += letter;
-	}
-	
-	message.channel.send(modifiedText);
- };
-
-module.exports.annoyees = annoyees;
-module.exports.handleAnnoy = handleAnnoy;

@@ -1,3 +1,4 @@
+const { Interaction } = require("discord.js");
 const { google } = require("googleapis");
 const { googleApiKey } = require("./config.json");
 const youtube = google.youtube({
@@ -5,6 +6,10 @@ const youtube = google.youtube({
   auth: googleApiKey,
 });
 
+/**
+ * Searches and returns an array of DarkDax video links
+ * @returns array of video links
+ */
 const search = async () => {
   let response = await youtube.search.list({
     part: "id,snippet",
@@ -33,4 +38,22 @@ const search = async () => {
     return videos;
 };
 
-module.exports.search = search;
+/**
+ * Handles the 'darkdax' slash (/) command
+ * @param {Interaction} interaction 
+ */
+const handleDarkDax = async (interaction) => {
+  let links = await search();
+  let reply = "";
+
+  links.forEach(element => {
+    reply = reply + element.link + "\n";
+  });
+
+  interaction.reply({
+    content: reply,
+    ephemeral: true
+  });
+};
+
+module.exports.handleDarkDax = handleDarkDax;
