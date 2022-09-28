@@ -8,7 +8,7 @@ const { youtube } = require("googleapis/build/src/apis/youtube");
 
 // Create a new client instance
 const client = new Client({
-	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent ],
+	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers ],
 	partials: [Partials.Channel]
 });
 
@@ -49,6 +49,17 @@ client.on('interactionCreate', async (interaction) => {
 		
 		case 'stopannoy':
 			unsubscribeUserFromAnnoy(interaction);
+			break;
+		
+		case 'randomuser':
+			var list = await client.guilds.fetch(interaction.guildId);
+			var users = await list.members.fetch();
+
+			var arr = Array.from(users);
+			let randomindex = Math.floor(Math.random() * arr.length);
+			interaction.reply({
+				content: `${arr[randomindex]} has been picked!`
+			})
 			break;
 	}
 });

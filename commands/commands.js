@@ -19,6 +19,7 @@ const commands = [
 				.setDescription('The ID of the user to stop annoying!')
 				.setRequired(true);
 		}),
+	new SlashCommandBuilder().setName('randomuser').setDescription('Picks a random user from the server!')
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: 10 }).setToken(token);
