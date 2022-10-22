@@ -81,6 +81,10 @@ client.on("interactionCreate", async (interaction) => {
       setStreamLink(interaction);
       break;
 
+    case "announcestream":
+      announceStream(client, interaction);
+      break;
+  }
 });
 
 // Login to Discord with your client's token

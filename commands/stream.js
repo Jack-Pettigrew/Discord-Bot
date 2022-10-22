@@ -44,5 +44,28 @@ const setStreamLink = async (interaction) => {
   });
 };
 
+/**
+ * Announces the stream
+ * @param {Client} client
+ * @param {Interaction} interaction
+ */
+const announceStream = async (client, interaction) => {
+  if (streamLink === "") {
+    interaction.reply({
+      content: "No stream link set - please set via /setstreamlink",
+      ephemeral: true,
+    });
+    return;
+  }
+
+  var time = interaction.options.getString("time");
+  var timezone = interaction.options.getString("timezone");
+  var message = interaction.options.getString("message");
+
+  var channel = client.channels.cache.get(twitchChannelID);
+  channel.send(`${message}\n${time + " " + timezone}\n${streamLink} @everyone`);
+};
+
 // module.exports.
 module.exports.setStreamLink = setStreamLink;
+module.exports.announceStream = announceStream;
