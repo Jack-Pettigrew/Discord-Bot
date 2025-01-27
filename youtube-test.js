@@ -42,7 +42,7 @@ const search = async () => {
  * Handles the 'darkdax' slash (/) command
  * @param {Interaction} interaction 
  */
-const handleDarkDax = async (interaction) => {
+export async function handleDarkDax(interaction) {
   let links = await search();
   let reply = "";
 
@@ -55,5 +55,3 @@ const handleDarkDax = async (interaction) => {
     ephemeral: true
   });
 };
-
-module.exports.handleDarkDax = handleDarkDax;

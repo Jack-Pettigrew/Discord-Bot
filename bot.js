@@ -1,5 +1,6 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
+import { handleCommand } from "./commands/handle-commands.js";
 
 config();
 
@@ -16,3 +17,5 @@ function onDiscordReady() {
 client.once(Events.ClientReady, onDiscordReady);
 
 client.login(process.env.TOKEN);
+
+client.on(Events.InteractionCreate, handleCommand);

@@ -7,7 +7,7 @@ var annoyees = [];
  * Subscribes the user to being annoyed
  * @param {Interaction} interaction 
  */
-const subscribeUserToAnnoy = async (interaction) => {
+export async function subscribeUserToAnnoy(interaction) {
     annoyees.push(interaction.options.data[0].user.id);
 
     interaction.reply({
@@ -21,7 +21,7 @@ const subscribeUserToAnnoy = async (interaction) => {
  * @param {Interaction} interaction 
  * @returns 
  */
-const unsubscribeUserFromAnnoy = async (interaction) => {
+ export async function unsubscribeUserFromAnnoy (interaction) {
     const index = annoyees.indexOf(interaction.options.data[0].user.id);
 
     if (index > -1) {
@@ -45,7 +45,7 @@ const unsubscribeUserFromAnnoy = async (interaction) => {
  * Handles annoying valid annoyee (User)
  * @param {Message} message 
  */
- const handleAnnoy = async (message) => {
+ export async function handleAnnoy(message) {
     if (message.author.bot || annoyees.length < 1 || !annoyees.includes(message.author.id)) return;
 	
     // SpOnGeBoB rEpLy
@@ -61,8 +61,3 @@ const unsubscribeUserFromAnnoy = async (interaction) => {
 	
 	message.channel.send(modifiedText);
  };
-
-module.exports.annoyees = annoyees;
-module.exports.subscribeUserToAnnoy = subscribeUserToAnnoy;
-module.exports.unsubscribeUserFromAnnoy = unsubscribeUserFromAnnoy;
-module.exports.handleAnnoy = handleAnnoy;
